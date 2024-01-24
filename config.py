@@ -1,6 +1,8 @@
 import os
 
-os.environ["DATABASE_URL"] = "postgresql://postgres:root@localhost:5432/postgres"
+#os.environ["DATABASE_URL"] = "postgresql://postgres:root@localhost:5432/postgres"
+os.environ["DATABASE_URL"] = "postgresql://postgres:root@db:5432/postgres"
+
 
 class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
