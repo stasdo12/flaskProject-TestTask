@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   app:
     build: .
@@ -8,10 +9,11 @@ services:
       - .:/app
     environment:
       - FLASK_APP=app.py
-      - FLASK_ENV=development
+      - FLASK_ENV=production
       - DATABASE_URL=postgresql://postgres:root@db:5432/postgres
     depends_on:
       - db
+
   db:
     image: postgres:latest
     environment:

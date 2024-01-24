@@ -9,7 +9,6 @@ class ProductResource(Resource):
     @staticmethod
     @cache.memoize(timeout=60)
     def get(product_id):
-        print("This is printed when the result is not in cache.")
         product = Product.query.get(product_id)
         if not product:
             return {'message': 'Product not found'}, 404

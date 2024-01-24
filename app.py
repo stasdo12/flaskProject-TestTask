@@ -16,20 +16,25 @@ def create_app():
     with app.app_context():
         db.init_app(app)
         cache.init_app(app)
-        db.drop_all()
-        db.create_all()
-        products_df = pd.read_csv('static/data/Products.csv')
-        products_df.columns = ['title', 'asin']
+        initialize_database()
 
-        reviews_df = pd.read_csv('static/data/Reviews.csv')
-        reviews_df.columns = ['asin', 'title', 'review']
-
-        products_df.to_sql('product', con=db.engine, if_exists='append', index=False,
-                           dtype={'title': db.String(255), 'asin': db.String(10)})
-
-        reviews_df.to_sql('review', con=db.engine, if_exists='append', index=False,
-                          dtype={'asin': db.String(10), 'title': db.String(255), 'review': db.Text})
     return app
+
+
+def initialize_database():
+    db.drop_all()
+    db.create_all()
+    products_df = pd.read_csv('static/data/Products.csv')
+    products_df.columns = ['title', 'asin']
+
+    reviews_df = pd.read_csv('static/data/Reviews.csv')
+    reviews_df.columns = ['asin', 'title', 'review']
+
+    products_df.to_sql('product', con=db.engine, if_exists='append', index=False,
+                       dtype={'title': db.String(255), 'asin': db.String(10)})
+
+    reviews_df.to_sql('review', con=db.engine, if_exists='append', index=False,
+                      dtype={'asin': db.String(10), 'title': db.String(255), 'review': db.Text})
 
 
 if __name__ == '__main__':
